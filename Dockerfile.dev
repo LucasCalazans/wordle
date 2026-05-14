@@ -1,0 +1,18 @@
+FROM node:20-bookworm-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      git \
+      ca-certificates \
+      openssh-client \
+      bash \
+      curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+
+ENV CI=false \
+    npm_config_loglevel=warn \
+    REACT_NATIVE_PACKAGER_HOSTNAME=0.0.0.0 \
+    EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+
+CMD ["bash"]

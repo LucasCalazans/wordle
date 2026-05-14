@@ -16,24 +16,35 @@ apps/
 
 ## Setup
 
+Tudo roda em container — não precisa Node/npm na máquina.
+
 ```bash
-npm install
+docker compose run --rm install     # primeira instalação dos workspaces
 ```
 
 ## Desenvolvimento
 
 ```bash
-# Rodar o app classic no Android
-cd apps/classic
-npx expo run:android
-
-# Rodar testes do engine
-cd packages/wordle-engine
-npm test
+# Testes do engine (e demais packages com test)
+docker compose run --rm test
 
 # Typecheck em todos os workspaces
-npm run typecheck
+docker compose run --rm typecheck
+
+# Shell interativo no container (debug, comandos ad-hoc)
+docker compose run --rm dev
+
+# Sobe servidor Metro/Expo (porta 8081 + 19000-19002)
+docker compose up dev
 ```
+
+Para rodar o app classic no emulador Android, com `dev` em pé:
+
+```bash
+docker compose exec dev bash -lc "cd apps/classic && npx expo start --android"
+```
+
+(o emulador Android conecta ao Metro do container via portas expostas)
 
 ## Como criar um Wordle temático novo
 

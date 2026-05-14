@@ -35,6 +35,19 @@ Pós-MVP: `packages/theme-copa` + `apps/copa` (~10 linhas cada).
 - **i18n:** auto-detect do sistema + override manual; merge de strings do tema
 - **Build:** EAS Build (futuro), `npx expo` localmente
 - **Test:** Jest no `wordle-engine` (lógica pura tem cobertura forte)
+- **Dev env:** Docker + docker-compose (`Dockerfile.dev` + `docker-compose.yml`). Todos os comandos de install/test/typecheck/dev rodam em container. Não instalar Node/npm direto na máquina.
+
+## Comandos via Docker
+
+```bash
+docker compose run --rm install        # npm install
+docker compose run --rm test           # roda todos os testes
+docker compose run --rm typecheck      # tsc --noEmit em todos os workspaces
+docker compose run --rm dev            # shell interativo no container
+docker compose up dev                  # sobe servidor Metro (Expo)
+```
+
+Os ports 8081/19000-19002 são expostos pra emulador Android (host) conectar ao Metro do container.
 
 ## Decisões travadas
 
