@@ -1,0 +1,42 @@
+/**
+ * Lista de palavras em português para o tema base.
+ * Todas com 5 letras quando normalizadas (sem acentos, maiúsculas).
+ * Curadoria manual: vocabulário comum, sem termos ofensivos ou regionais raros.
+ */
+export const wordsPt: readonly string[] = [
+  'AMIGO', 'AMORE', 'ANJOS', 'ANTES', 'AREIA', 'ARMAS', 'BAIXO', 'BANHO',
+  'BARCO', 'BATER', 'BEBES', 'BEBER', 'BICHO', 'BOLAS', 'BOMBA', 'BRAVO',
+  'BROCA', 'BRONX', 'CABRA', 'CACAU', 'CAIDA', 'CALOR', 'CAMAS', 'CAMPO',
+  'CANAL', 'CANTO', 'CARGA', 'CARRO', 'CASAS', 'CASCO', 'CAUSA', 'CAVAR',
+  'CHAMA', 'CHAPA', 'CHATO', 'CHAVE', 'CHEFE', 'CHEIO', 'CHITA', 'CHUVA',
+  'CINCO', 'CLARO', 'COBRA', 'COISA', 'COLAR', 'COMER', 'CONTA', 'COPAS',
+  'COROA', 'CORPO', 'CORRE', 'CORTE', 'COSTA', 'COURO', 'CRIAR', 'CRISE',
+  'CURTO', 'DENTE', 'DEVER', 'DICAS', 'DISCO', 'DIZER', 'DOCES', 'DUPLA',
+  'DURAR', 'ENTRA', 'ENTRE', 'ESPIA', 'ESTAR', 'FACAS', 'FALAR', 'FALTA',
+  'FAZER', 'FERRO', 'FESTA', 'FICAR', 'FILHO', 'FINAL', 'FIRMA', 'FOGAO',
+  'FORCA', 'FORTE', 'FRACO', 'FRUTA', 'FUMAR', 'GANHO', 'GARFO', 'GATOS',
+  'GENTE', 'GORDO', 'GRADE', 'GRANA', 'GRAOS', 'GRITO', 'GRUPO', 'HORAS',
+  'HOTEL', 'IDADE', 'IDEIA', 'IGUAL', 'ILHAS', 'IRMAO', 'JEITO', 'JOGAR',
+  'JOGOS', 'JUSTO', 'LADOS', 'LANCE', 'LARGO', 'LATAS', 'LAVAR', 'LEGAL',
+  'LEITE', 'LETRA', 'LIGAR', 'LIMAO', 'LINHA', 'LISTA', 'LIVRE', 'LIVRO',
+  'LOJAS', 'LONGE', 'LUTAR', 'LUZES', 'MADRE', 'MAGRO', 'MANGA', 'MARES',
+  'MASSA', 'MATAR', 'MEDIO', 'MENOR', 'MENOS', 'MESES', 'METAS', 'MINHA',
+  'MISSA', 'MODOS', 'MOLHO', 'MORAR', 'MORTE', 'MUITO', 'MUNDO', 'MURAL',
+  'NADAR', 'NAVIO', 'NOITE', 'NOMES', 'NORTE', 'NOVOS', 'OBRAS', 'OLHAR',
+  'OLIVA', 'ONDAS', 'OUVIR', 'PAGAR', 'PAGOS', 'PAPEL', 'PARAR', 'PARTE',
+  'PASSO', 'PASTA', 'PATAS', 'PATIO', 'PAUSA', 'PEDIR', 'PEGAR', 'PEITO',
+  'PEIXE', 'PENAS', 'PERDA', 'PERTO', 'PESCA', 'PESOS', 'PIANO', 'PIPAS',
+  'PISTA', 'PLANO', 'POBRE', 'PODER', 'PONTE', 'PONTO', 'PORTA', 'POSSO',
+  'POVOS', 'PRACA', 'PRADO', 'PRATO', 'PRAZO', 'PRECO', 'PRETO', 'PRIMO',
+  'PROVA', 'PULOS', 'QUASE', 'QUERO', 'RADIO', 'RAIVA', 'RARAS', 'RECEM',
+  'REGRA', 'REINO', 'RESTO', 'RIMAS', 'RITMO', 'ROBOT', 'RODAR', 'ROUPA',
+  'SABER', 'SABIO', 'SACOS', 'SAIDA', 'SALAO', 'SALAS', 'SALSA', 'SANTO',
+  'SAPOS', 'SECAS', 'SELOS', 'SENTA', 'SERIE', 'SETOR', 'SOBRE', 'SOLOS',
+  'SONHO', 'SOPAS', 'SUCOS', 'SUSTO', 'TACAS', 'TAMPO', 'TANTO', 'TARDE',
+  'TECLA', 'TEMPO', 'TENDA', 'TERCO', 'TERMO', 'TEXTO', 'TIGRE', 'TIRAR',
+  'TOCAR', 'TOMAR', 'TOQUE', 'TORRE', 'TORTA', 'TRAIR', 'TRENS', 'TRIBO',
+  'TRIGO', 'TRIPA', 'TROCO', 'TUMBA', 'TURMA', 'TURNO', 'UNHAS', 'UTEIS',
+  'VAGAS', 'VALES', 'VALOR', 'VAPOR', 'VARAS', 'VASOS', 'VELHO', 'VENDA',
+  'VERDE', 'VEZES', 'VIDAS', 'VIDEO', 'VINHO', 'VIRAR', 'VIVER', 'VOLTA',
+  'ZEBRA',
+];

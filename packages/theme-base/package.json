@@ -1,0 +1,16 @@
+{
+  "name": "theme-base",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Default theme + base word lists for the Wordle engine.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "validate": "tsx scripts/validate-words.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0"
+  }
+}
