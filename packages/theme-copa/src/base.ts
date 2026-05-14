@@ -1,16 +1,32 @@
 import type { WordleTheme } from 'theme-base';
 import { wordsValidEn, wordsValidPt } from 'theme-base';
+import { copaExplanationsEn, copaExplanationsPt } from './explanations';
 import { copaStringsEn, copaStringsPt } from './strings';
 import { wordsCopaEn } from './words.copa.en';
+import { wordsCopaPrimaryEn } from './words.copa.primary.en';
+import { wordsCopaPrimaryPt } from './words.copa.primary.pt';
 import { wordsCopaPt } from './words.copa.pt';
 
 /**
  * Tema Copa do Mundo — paleta gramado verde-mato + branco.
  *
- * `wordList.pt` e `wordList.en` são targets EXCLUSIVOS do tema (nenhuma
- * palavra do theme-base aparece como resposta). Já `validGuesses` reusa
- * os arrays do theme-base — o jogador pode chutar qualquer palavra real
- * do PT/EN como exploração, mesmo que nunca seja resposta.
+ * `wordList.pt`/`en` = lista completa de targets (79 PT / 76 EN). Esses
+ * arrays cobrem 6 categorias hand-curated: seleções participantes,
+ * capitais dos países das seleções, cidades-sede 2026, jogadores BR/intl
+ * icônicos, técnicos relevantes, termos do esporte. Geradas por
+ * scripts/collect-targets.ts a partir de dados crus hand-curated.
+ *
+ * `wordList.primary` = subconjunto Copa-direto (seleções + jogadores +
+ * técnicos + termos). O picker sorteia exclusivamente daqui até esgotar;
+ * só então cai pra "secondary" (capitais + cidades-sede). Persistência
+ * em AsyncStorage (`usePersistedUsedWords`).
+ *
+ * `wordList.validGuesses` = reuso do theme-base (9979 PT + 15921 EN) —
+ * UX permissiva: jogador chuta qualquer palavra real.
+ *
+ * `explanations` = mapa palavra → frase curta. Exibido no modal de fim
+ * de jogo. Função pedagógica: "joguei TUNIS sem saber, aprendi que é a
+ * capital da Tunísia".
  */
 export const copaTheme: WordleTheme = {
   id: 'copa',
@@ -18,18 +34,18 @@ export const copaTheme: WordleTheme = {
 
   colors: {
     background: '#FFFFFF',
-    surface: '#F1F8E9', // gramado claro (BG cards/modais sutil)
+    surface: '#F1F8E9',
     text: '#1B1B1B',
     textMuted: '#607D8B',
-    primary: '#2E7D32', // gramado verde-mato (header, CTA)
+    primary: '#2E7D32',
     border: '#BDBDBD',
     tile: {
       empty: '#FFFFFF',
-      correct: '#2E7D32', // gramado para acerto
-      present: '#FBC02D', // amarelo cartão para palpite presente
-      absent: '#6D7C82', // slate para ausente
+      correct: '#2E7D32',
+      present: '#FBC02D',
+      absent: '#6D7C82',
       borderIdle: '#BDBDBD',
-      borderActive: '#4CAF50', // verde-claro quando digitando
+      borderActive: '#4CAF50',
       textOnFilled: '#FFFFFF',
       textOnEmpty: '#1B1B1B',
     },
@@ -59,15 +75,26 @@ export const copaTheme: WordleTheme = {
   wordList: {
     pt: wordsCopaPt,
     en: wordsCopaEn,
+    primary: {
+      pt: wordsCopaPrimaryPt,
+      en: wordsCopaPrimaryEn,
+    },
     validGuesses: {
-      pt: wordsValidPt, // 9979 palavras PT como pool de palpites válidos
-      en: wordsValidEn, // 15921 palavras EN como pool de palpites válidos
+      pt: wordsValidPt,
+      en: wordsValidEn,
     },
   },
 
   strings: {
     pt: copaStringsPt,
     en: copaStringsEn,
+  },
+
+  background: { kind: 'pitchStripes' },
+
+  explanations: {
+    pt: copaExplanationsPt,
+    en: copaExplanationsEn,
   },
 
   animations: {

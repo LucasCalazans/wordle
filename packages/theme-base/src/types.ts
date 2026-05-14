@@ -102,6 +102,16 @@ export interface ThemeWordList {
   /** Words eligible as the secret target. Small, curated. */
   en: readonly string[];
   /**
+   * Optional priority subset of `pt`/`en`. When provided, the picker draws
+   * from `primary` first and only falls back to the rest of `pt`/`en` after
+   * all primary words have been used at least once (tracked in AsyncStorage
+   * per theme+locale). Subset must be ⊂ pt/en respectively.
+   */
+  primary?: {
+    pt?: readonly string[];
+    en?: readonly string[];
+  };
+  /**
    * Optional broader pool of valid guesses. Always merged with the target list
    * for `isValidGuess` checks. Never picked as a target.
    */
@@ -110,6 +120,19 @@ export interface ThemeWordList {
     en?: readonly string[];
   };
 }
+
+/** Visual padrão renderizado atrás do conteúdo de tela. */
+export type ThemeBackgroundKind = 'plain' | 'pitchStripes';
+
+export interface ThemeBackground {
+  kind: ThemeBackgroundKind;
+}
+
+/**
+ * Mapa de palavra → explicação curta (1 frase), mostrada no fim do jogo.
+ * Palavras sem entrada caem num fallback genérico (ver `getExplanation`).
+ */
+export type ExplanationMap = Record<string, string>;
 
 export interface ThemeGameConfig {
   wordLength?: number;
@@ -134,4 +157,11 @@ export interface WordleTheme {
   strings?: Partial<Record<Locale, Partial<UiStrings>>>;
   gameConfig?: ThemeGameConfig;
   animations?: ThemeAnimations;
+  /** Padrão visual atrás do conteúdo. Default: 'plain' (sem nada). */
+  background?: ThemeBackground;
+  /**
+   * Explicações curtas das palavras-alvo, exibidas no modal de fim de jogo.
+   * Keys são palavras normalizadas (uppercase A-Z, sem acentos).
+   */
+  explanations?: Partial<Record<Locale, ExplanationMap>>;
 }

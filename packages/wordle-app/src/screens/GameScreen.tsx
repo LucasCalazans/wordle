@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Locale } from 'theme-base';
 import {
@@ -7,12 +7,15 @@ import {
   EndGameModal,
   Header,
   Keyboard,
+  PitchStripes,
   Toast,
   useTheme,
   type KeyValue,
 } from 'wordle-ui';
 import { useGame } from '../hooks/useGame';
-import { interpolate, resolveStrings } from '../i18n';
+import { usePersistedUsedWords } from '../hooks/usePersistedUsedWords';
+import { getExplanation, interpolate, resolveStrings } from '../i18n';
+import { pickNext } from '../services/wordPicker';
 
 export interface GameScreenProps {
   locale: Locale;
@@ -24,6 +27,7 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
   const strings = useMemo(() => resolveStrings(theme, locale), [theme, locale]);
 
   const wordList = theme.wordList[locale];
+  const primaryList = theme.wordList.primary?.[locale];
 
   const validSet = useMemo(() => {
     const extra = theme.wordList.validGuesses?.[locale] ?? [];
@@ -39,16 +43,48 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
     [theme.gameConfig?.wordLength, theme.gameConfig?.maxAttempts, validSet],
   );
 
+  // Persistência de palavras já mostradas (por theme + locale). O picker
+  // usa isso para evitar repetir até esgotar; primary esgota antes do resto.
+  const { used, loaded: usedLoaded, markUsed, reset: resetUsed } =
+    usePersistedUsedWords(theme.id, locale);
+
+  // Ref garante que o picker sempre vê `used` mais recente, sem precisar
+  // refazer a closure do useGame.
+  const usedRef = useRef(used);
+  usedRef.current = used;
+
+  const pickNextTarget = useCallback((): string => {
+    return pickNext({
+      all: wordList,
+      primary: primaryList,
+      used: usedRef.current,
+      onResetUsed: resetUsed,
+    });
+  }, [wordList, primaryList, resetUsed]);
+
   const { state, shakeKey, addLetter, removeLetter, submit, reset } = useGame({
-    wordList,
+    pickNextTarget,
     config,
   });
+
+  // Marca o target atual como "visto" assim que ele muda.
+  // Gera persistência mesmo se o jogador fechar o app antes de terminar.
+  useEffect(() => {
+    if (state.targetNormalized) {
+      markUsed(state.targetNormalized);
+    }
+  }, [state.targetNormalized, markUsed]);
 
   const errorMessage = useMemo(() => {
     if (state.lastRejection === 'too_short') return strings.errors.tooShort;
     if (state.lastRejection === 'invalid_word') return strings.errors.invalidWord;
     return '';
   }, [state.lastRejection, strings.errors]);
+
+  const explanation = useMemo(
+    () => getExplanation(theme, locale, state.targetNormalized),
+    [theme, locale, state.targetNormalized],
+  );
 
   const handleKey = (k: KeyValue) => {
     if (k === 'ENTER') submit();
@@ -80,10 +116,23 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
 
   const isEnd = state.phase === 'won' || state.phase === 'lost';
 
+  // Aguarda hidratação do AsyncStorage antes de mostrar o board pra evitar
+  // sortear/marcar palavra na lista vazia (que viraria stale após carregar).
+  if (!usedLoaded) {
+    return (
+      <View style={[styles.loading, { backgroundColor: theme.colors.background }]}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
+
+  const showPitch = theme.background?.kind === 'pitchStripes';
+
   return (
     <SafeAreaView
       style={[styles.root, { backgroundColor: theme.colors.background }]}
     >
+      {showPitch ? <PitchStripes /> : null}
       <Header
         title={strings.appTitle}
         locale={locale}
@@ -108,14 +157,16 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
           visible
           phase={state.phase === 'won' ? 'won' : 'lost'}
           attempts={state.guesses.length}
-          targetWord={state.target}
+          targetWord={state.targetNormalized}
           title={state.phase === 'won' ? strings.win.title : strings.lose.title}
           message={
             state.phase === 'won'
               ? interpolate(strings.win.message, { attempts: state.guesses.length })
-              : interpolate(strings.lose.message, { word: state.target.toUpperCase() })
+              : interpolate(strings.lose.message, { word: state.targetNormalized })
           }
           ctaLabel={strings.newGame}
+          explanation={explanation}
+          wordRevealLabel={state.targetNormalized}
           onClose={reset}
           onPlayAgain={reset}
         />
@@ -135,5 +186,10 @@ const styles = StyleSheet.create({
   },
   keyboardArea: {
     paddingHorizontal: 4,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -1,6 +1,7 @@
 import {
   baseStringsEn,
   baseStringsPt,
+  type ExplanationMap,
   type Locale,
   type UiStrings,
   type WordleTheme,
@@ -45,4 +46,19 @@ export function interpolate(
     const v = vars[k];
     return v === undefined || v === null ? '' : String(v);
   });
+}
+
+/**
+ * Procura a explicação da palavra (target já normalizada) na tabela do
+ * tema. Retorna `null` se o tema não fornece `explanations` ou se a
+ * palavra não tem entrada — caller decide se mostra fallback ou nada.
+ */
+export function getExplanation(
+  theme: WordleTheme,
+  locale: Locale,
+  normalizedWord: string,
+): string | null {
+  const map: ExplanationMap | undefined = theme.explanations?.[locale];
+  if (!map) return null;
+  return map[normalizedWord] ?? null;
 }

@@ -304,10 +304,42 @@ function print(report: LangReport) {
   }
 }
 
+// Categorias diretamente ligadas a "Copa do Mundo de seleções" — viram tier 1.
+// As demais (capitais, cidades-sede) viram tier 2: aparecem só depois que
+// o jogador esgota o tier 1.
+const PRIMARY_PT = new Set([
+  'paises2026',
+  'paisesPastCopa',
+  'jogadoresBR',
+  'jogadoresIntl',
+  'tecnicos',
+  'termos',
+  'copaMomentos',
+]);
+const PRIMARY_EN = new Set(['players', 'coaches', 'terms']);
+
+function partition(report: LangReport, primarySet: Set<string>) {
+  const primary: string[] = [];
+  const secondary: string[] = [];
+  for (const w of report.uniqueTotal) {
+    const origins = report.origins[w] ?? [];
+    const isPrimary = origins.some((c) => primarySet.has(c));
+    (isPrimary ? primary : secondary).push(w);
+  }
+  return { primary: primary.sort(), secondary: secondary.sort() };
+}
+
 const ptReport = reportLocale('pt', PT);
 const enReport = reportLocale('en', EN);
 print(ptReport);
 print(enReport);
+
+const ptSplit = partition(ptReport, PRIMARY_PT);
+const enSplit = partition(enReport, PRIMARY_EN);
+
+console.log(
+  `\n--- Tier split ---\n  PT primary=${ptSplit.primary.length} secondary=${ptSplit.secondary.length}\n  EN primary=${enSplit.primary.length} secondary=${enSplit.secondary.length}`,
+);
 
 const tmpDir = join(__dirname, '..', 'tmp');
 mkdirSync(tmpDir, { recursive: true });
@@ -353,12 +385,24 @@ emitWordList(
   join(srcDir, 'words.copa.pt.ts'),
   'wordsCopaPt',
   ptReport.uniqueTotal,
-  'Targets da Copa do Mundo em PT-BR. Termos, países, capitais, clubes, jogadores e técnicos icônicos de Copas 1930-2026.',
+  'Todos os targets PT (primary + secondary). Termos, países, capitais, jogadores e técnicos icônicos de Copas 1930-2026.',
 );
 emitWordList(
   join(srcDir, 'words.copa.en.ts'),
   'wordsCopaEn',
   enReport.uniqueTotal,
-  'Targets da Copa do Mundo em English. World Cup-themed terms, countries, capitals, players, coaches from 1930-2026.',
+  'Todos os targets EN. World Cup-themed terms, countries, capitals, players, coaches from 1930-2026.',
+);
+emitWordList(
+  join(srcDir, 'words.copa.primary.pt.ts'),
+  'wordsCopaPrimaryPt',
+  ptSplit.primary,
+  'Tier 1 (PT): palavras diretamente ligadas a Copa do Mundo — seleções, jogadores, técnicos, termos do esporte. Sorteadas antes da tier 2.',
+);
+emitWordList(
+  join(srcDir, 'words.copa.primary.en.ts'),
+  'wordsCopaPrimaryEn',
+  enSplit.primary,
+  'Tier 1 (EN): World Cup-direct words — players, coaches, terms.',
 );
 console.log('\nDone.');

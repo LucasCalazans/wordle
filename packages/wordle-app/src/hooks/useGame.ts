@@ -1,15 +1,20 @@
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import {
   initialState,
   makeConfig,
   reducer,
-  selectRandomWord,
   type EngineConfig,
   type GameState,
 } from 'wordle-engine';
 
 export interface UseGameOptions {
-  wordList: readonly string[];
+  /**
+   * Função que retorna a próxima palavra-alvo. Chamada uma vez na
+   * inicialização e a cada `reset`. A implementação fica fora do hook
+   * para que estratégias de tiering / "evitar repetir" / persistência
+   * possam ser plugadas pela tela.
+   */
+  pickNextTarget: () => string;
   config?: Partial<EngineConfig>;
 }
 
@@ -23,11 +28,19 @@ export interface UseGameResult {
   reset: () => void;
 }
 
-export function useGame({ wordList, config }: UseGameOptions): UseGameResult {
+export function useGame({
+  pickNextTarget,
+  config,
+}: UseGameOptions): UseGameResult {
+  // Ref pra evitar stale closure: garante que SUBMIT/RESET veem a função
+  // mais recente passada via props.
+  const pickRef = useRef(pickNextTarget);
+  pickRef.current = pickNextTarget;
+
   const [state, dispatch] = useReducer(
     reducer,
     undefined as unknown as GameState,
-    () => initialState(selectRandomWord(wordList), makeConfig(config)),
+    () => initialState(pickRef.current(), makeConfig(config)),
   );
 
   const [shakeKey, setShakeKey] = useState(0);
@@ -48,8 +61,8 @@ export function useGame({ wordList, config }: UseGameOptions): UseGameResult {
   );
   const submit = useCallback(() => dispatch({ type: 'SUBMIT' }), []);
   const reset = useCallback(
-    () => dispatch({ type: 'RESET', target: selectRandomWord(wordList) }),
-    [wordList],
+    () => dispatch({ type: 'RESET', target: pickRef.current() }),
+    [],
   );
 
   return { state, shakeKey, addLetter, removeLetter, submit, reset };

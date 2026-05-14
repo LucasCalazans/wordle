@@ -10,15 +10,22 @@ export interface EndGameModalProps {
   title: string;
   message: string;
   ctaLabel: string;
+  /** Texto curto explicando o que a palavra significa (opcional). */
+  explanation?: string | null;
+  /** Label "A palavra era:" mostrada acima do reveal. */
+  wordRevealLabel?: string;
   onClose: () => void;
   onPlayAgain: () => void;
 }
 
 export function EndGameModal({
   visible,
+  targetWord,
   title,
   message,
   ctaLabel,
+  explanation,
+  wordRevealLabel,
   onClose,
   onPlayAgain,
 }: EndGameModalProps) {
@@ -41,7 +48,10 @@ export function EndGameModal({
           onPress={(e) => e.stopPropagation()}
           style={[
             styles.surface,
-            { backgroundColor: theme.colors.modal.surface, padding: theme.spacing.padding * 2 },
+            {
+              backgroundColor: theme.colors.modal.surface,
+              padding: theme.spacing.padding * 2,
+            },
           ]}
         >
           <Text
@@ -56,16 +66,50 @@ export function EndGameModal({
           >
             {title}
           </Text>
+
           <Text
             style={{
               fontSize: theme.typography.sizes.body,
               color: theme.colors.textMuted,
               textAlign: 'center',
-              marginBottom: 24,
+              marginBottom: explanation ? 16 : 24,
             }}
           >
             {message}
           </Text>
+
+          {explanation ? (
+            <View
+              style={[
+                styles.explainBox,
+                { backgroundColor: theme.colors.surface, marginBottom: 20 },
+              ]}
+            >
+              <Text
+                style={{
+                  fontSize: theme.typography.sizes.body - 2,
+                  color: theme.colors.textMuted,
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1,
+                  marginBottom: 4,
+                }}
+              >
+                {wordRevealLabel ?? targetWord.toUpperCase()}
+              </Text>
+              <Text
+                style={{
+                  fontSize: theme.typography.sizes.body,
+                  color: theme.colors.text,
+                  textAlign: 'left',
+                  lineHeight: theme.typography.sizes.body * 1.4,
+                }}
+              >
+                {explanation}
+              </Text>
+            </View>
+          ) : null}
+
           <Pressable
             accessibilityRole="button"
             onPress={onPlayAgain}
@@ -106,6 +150,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
+  },
+  explainBox: {
+    padding: 12,
+    borderRadius: 8,
   },
   cta: {
     paddingVertical: 14,

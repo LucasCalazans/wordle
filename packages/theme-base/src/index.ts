@@ -9,6 +9,9 @@ export type {
   ThemeAnimations,
   ThemeGameConfig,
   ThemeWordList,
+  ThemeBackground,
+  ThemeBackgroundKind,
+  ExplanationMap,
   UiStrings,
   WordleTheme,
 } from './types';

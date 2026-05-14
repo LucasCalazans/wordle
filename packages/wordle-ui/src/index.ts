@@ -24,3 +24,6 @@ export type { HeaderProps } from './components/Header';
 
 export { Toast } from './components/Toast';
 export type { ToastProps } from './components/Toast';
+
+export { PitchStripes } from './components/PitchStripes';
+export type { PitchStripesProps } from './components/PitchStripes';

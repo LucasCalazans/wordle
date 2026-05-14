@@ -8,7 +8,9 @@ export { useGame } from './hooks/useGame';
 export type { UseGameOptions, UseGameResult } from './hooks/useGame';
 
 export { usePersistedLanguage } from './hooks/usePersistedLanguage';
+export { usePersistedUsedWords } from './hooks/usePersistedUsedWords';
 
-export { resolveStrings, interpolate } from './i18n';
+export { resolveStrings, interpolate, getExplanation } from './i18n';
 export { useThemeFonts } from './services/fontLoader';
 export { storage } from './services/storage';
+export { pickNext } from './services/wordPicker';

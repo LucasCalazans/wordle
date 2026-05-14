@@ -3,22 +3,17 @@
  * NÃO editar à mão — re-rode 'npm run collect-targets --workspace=theme-copa'
  * após editar as categorias hand-curated no script.
  *
- * Todos os targets PT (primary + secondary). Termos, países, capitais, jogadores e técnicos icônicos de Copas 1930-2026.
- * Total: 79 palavras, 5 letras, normalizadas (uppercase A-Z, sem diacríticos).
+ * Tier 1 (PT): palavras diretamente ligadas a Copa do Mundo — seleções, jogadores, técnicos, termos do esporte. Sorteadas antes da tier 2.
+ * Total: 63 palavras, 5 letras, normalizadas (uppercase A-Z, sem diacríticos).
  */
-export const wordsCopaPt: readonly string[] = [
-  'ABUJA',
+export const wordsCopaPrimaryPt: readonly string[] = [
   'ALABA',
   'APITO',
   'ARENA',
-  'ARGEL',
-  'BAGDA',
   'BANKS',
-  'BERNA',
   'BLANC',
   'BOBAN',
   'BOLAS',
-  'CAIRO',
   'CAMPO',
   'CATAR',
   'CESAR',
@@ -28,7 +23,6 @@ export const wordsCopaPt: readonly string[] = [
   'COMAN',
   'COPAS',
   'CRACK',
-  'DAKAR',
   'DUNGA',
   'DZEKO',
   'EGITO',
@@ -55,35 +49,25 @@ export const wordsCopaPt: readonly string[] = [
   'LIPPI',
   'LUCAS',
   'LUCIO',
-  'MADRI',
   'MESSI',
-  'MIAMI',
   'NEUER',
-  'PARIS',
   'PASSE',
   'PEGAR',
   'PENAL',
   'PETIT',
   'PIRLO',
   'PODIO',
-  'PRAGA',
-  'QUITO',
-  'RABAT',
-  'RIADE',
   'ROSSI',
   'SALAH',
   'SEMIS',
   'SUICA',
   'SUKER',
   'TACAS',
-  'TEERA',
   'TEVEZ',
   'TIMES',
   'TOTTI',
   'TRAVE',
-  'TUNIS',
   'VARDY',
   'VIDAL',
-  'VIENA',
   'VILLA',
 ];
