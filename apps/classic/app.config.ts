@@ -6,7 +6,9 @@ const config: ExpoConfig = {
   version: '0.1.0',
   orientation: 'portrait',
   userInterfaceStyle: 'light',
+  platforms: ['android', 'ios'],
   assetBundlePatterns: ['**/*'],
+  plugins: ['expo-font', 'expo-localization'],
   android: {
     package: 'com.prism.wordleclassic',
   },
