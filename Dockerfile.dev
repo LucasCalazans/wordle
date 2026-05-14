@@ -1,12 +1,40 @@
 FROM node:20-bookworm-slim
 
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Base tools + JDK 17 (exigido pelo Android Gradle Plugin 8.x)
 RUN apt-get update && apt-get install -y --no-install-recommends \
       git \
       ca-certificates \
       openssh-client \
       bash \
       curl \
+      wget \
+      unzip \
+      openjdk-17-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
+
+# Android SDK — cmdline-tools + platform 35 + build-tools 35.0.0
+ENV ANDROID_HOME=/opt/android-sdk \
+    ANDROID_SDK_ROOT=/opt/android-sdk
+ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools"
+
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools \
+    && cd ${ANDROID_HOME}/cmdline-tools \
+    && wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip \
+    && unzip -q tools.zip \
+    && mv cmdline-tools latest \
+    && rm tools.zip \
+    && yes | sdkmanager --licenses > /dev/null \
+    && sdkmanager \
+         "platform-tools" \
+         "platforms;android-35" \
+         "build-tools;35.0.0" \
+         > /dev/null \
+    && chown -R 1000:1000 ${ANDROID_HOME}
+
+# eas-cli global (sem precisar de npx -y a cada comando)
+RUN npm install -g eas-cli@latest
 
 WORKDIR /workspace
 
