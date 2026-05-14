@@ -49,3 +49,6 @@ Thumbs.db
 # Coverage
 coverage/
 *.lcov
+
+# Tema collection artifacts (generated, transient)
+packages/*/tmp/
