@@ -2,6 +2,8 @@ import { baseStringsEn, baseStringsPt } from './strings';
 import type { WordleTheme } from './types';
 import { wordsEn } from './words.en';
 import { wordsPt } from './words.pt';
+import { wordsValidEn } from './words.valid.en';
+import { wordsValidPt } from './words.valid.pt';
 
 export const baseTheme: WordleTheme = {
   id: 'base',
@@ -58,6 +60,10 @@ export const baseTheme: WordleTheme = {
   wordList: {
     pt: wordsPt,
     en: wordsEn,
+    validGuesses: {
+      pt: wordsValidPt,
+      en: wordsValidEn,
+    },
   },
   strings: {
     pt: baseStringsPt,

@@ -17,3 +17,5 @@ export { baseTheme } from './base';
 export { baseStringsPt, baseStringsEn } from './strings';
 export { wordsPt } from './words.pt';
 export { wordsEn } from './words.en';
+export { wordsValidPt } from './words.valid.pt';
+export { wordsValidEn } from './words.valid.en';

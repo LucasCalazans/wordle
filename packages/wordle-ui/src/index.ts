@@ -21,3 +21,6 @@ export type { EndGameModalProps } from './components/EndGameModal';
 
 export { Header } from './components/Header';
 export type { HeaderProps } from './components/Header';
+
+export { Toast } from './components/Toast';
+export type { ToastProps } from './components/Toast';

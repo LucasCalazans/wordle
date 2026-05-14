@@ -7,6 +7,7 @@ import {
   EndGameModal,
   Header,
   Keyboard,
+  Toast,
   useTheme,
   type KeyValue,
 } from 'wordle-ui';
@@ -24,18 +25,30 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
 
   const wordList = theme.wordList[locale];
 
+  const validSet = useMemo(() => {
+    const extra = theme.wordList.validGuesses?.[locale] ?? [];
+    return new Set<string>([...wordList, ...extra]);
+  }, [wordList, theme.wordList.validGuesses, locale]);
+
   const config = useMemo(
     () => ({
       wordLength: theme.gameConfig?.wordLength,
       maxAttempts: theme.gameConfig?.maxAttempts,
+      isValidGuess: (g: string) => validSet.has(g),
     }),
-    [theme.gameConfig?.wordLength, theme.gameConfig?.maxAttempts],
+    [theme.gameConfig?.wordLength, theme.gameConfig?.maxAttempts, validSet],
   );
 
   const { state, shakeKey, addLetter, removeLetter, submit, reset } = useGame({
     wordList,
     config,
   });
+
+  const errorMessage = useMemo(() => {
+    if (state.lastRejection === 'too_short') return strings.errors.tooShort;
+    if (state.lastRejection === 'invalid_word') return strings.errors.invalidWord;
+    return '';
+  }, [state.lastRejection, strings.errors]);
 
   const handleKey = (k: KeyValue) => {
     if (k === 'ENTER') submit();
@@ -76,6 +89,7 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
         locale={locale}
         onLanguagePress={handleLanguagePress}
       />
+      <Toast showKey={shakeKey} message={errorMessage} />
       <View style={styles.boardArea}>
         <Board
           guesses={state.guesses}

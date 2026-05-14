@@ -97,8 +97,18 @@ export interface UiStrings {
 }
 
 export interface ThemeWordList {
+  /** Words eligible as the secret target. Small, curated. */
   pt: readonly string[];
+  /** Words eligible as the secret target. Small, curated. */
   en: readonly string[];
+  /**
+   * Optional broader pool of valid guesses. Always merged with the target list
+   * for `isValidGuess` checks. Never picked as a target.
+   */
+  validGuesses?: {
+    pt?: readonly string[];
+    en?: readonly string[];
+  };
 }
 
 export interface ThemeGameConfig {
