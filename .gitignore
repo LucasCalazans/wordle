@@ -52,3 +52,6 @@ coverage/
 
 # Tema collection artifacts (generated, transient)
 packages/*/tmp/
+
+# Claude Code internals
+.claude/worktrees/
