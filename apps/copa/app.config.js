@@ -1,12 +1,12 @@
-import type { ExpoConfig } from 'expo/config';
-
-const config: ExpoConfig = {
-  name: '5 Letras',
-  slug: 'cinco-letras',
+/** @type {import('expo/config').ExpoConfig} */
+module.exports = {
+  name: 'Copa Letras',
+  slug: 'copa-letras',
   version: '1.0.0',
+  owner: 'skab',
   orientation: 'portrait',
   userInterfaceStyle: 'light',
-  primaryColor: '#2F80ED',
+  primaryColor: '#2E7D32',
   platforms: ['android', 'ios'],
   assetBundlePatterns: ['**/*'],
   icon: './assets/icon.png',
@@ -16,26 +16,29 @@ const config: ExpoConfig = {
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#F6F7F2',
+        backgroundColor: '#2E7D32',
         image: './assets/splash-icon.png',
         imageWidth: 200,
       },
     ],
   ],
   android: {
-    package: 'com.prism.cincoletras',
+    package: 'com.prism.copaletras',
     versionCode: 1,
     permissions: [],
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#F6F7F2',
+      backgroundColor: '#2E7D32',
     },
   },
   ios: {
-    bundleIdentifier: 'com.prism.cincoletras',
+    bundleIdentifier: 'com.prism.copaletras',
     buildNumber: '1',
     supportsTablet: true,
   },
+  extra: {
+    eas: {
+      projectId: 'fd18d319-2657-4f61-9bfe-f95e17b00f5c',
+    },
+  },
 };
-
-export default config;
