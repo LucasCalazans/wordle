@@ -24,11 +24,13 @@ describe('evaluate', () => {
     ]);
   });
 
-  it('handles repeated guess letters with single target match (one present, one absent)', () => {
-    // target has a single E; guess has E twice → first stays absent, last is present at pos 4
+  it('handles repeated guess letters when only one matches', () => {
+    // target PLATE has a single E (at pos 4). Guess EAGLE has E at pos 0 and pos 4.
+    // pos 4 is the green E; pos 0 has no E left in the remaining stock → absent.
+    // A at pos 1: present (PLATE has an A). L at pos 3: present.
     expect(states('EAGLE', 'PLATE')).toEqual([
-      'present',
       'absent',
+      'present',
       'absent',
       'present',
       'correct',

@@ -10,8 +10,9 @@ function setup(target = 'CASAS', config = baseConfig): GameState {
 
 describe('initialState', () => {
   it('creates a playing state with the normalized target', () => {
-    const s = setup('café'); // length 4 normalized
+    const s = setup('CAFÉS'); // 5 chars, normalized to CAFES (still length 5)
     expect(s.phase).toBe('playing');
+    expect(s.targetNormalized).toBe('CAFES');
     expect(s.guesses).toEqual([]);
     expect(s.currentGuess).toBe('');
     expect(s.lastRejection).toBeNull();
