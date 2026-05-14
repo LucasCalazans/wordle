@@ -1,0 +1,31 @@
+{
+  "name": "wordle-classic",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wordle classic — usa theme-base (tema neutro).",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "expo": "~51.0.28",
+    "expo-font": "~12.0.10",
+    "expo-localization": "~15.0.3",
+    "expo-status-bar": "~1.12.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "react": "18.3.1",
+    "react-native": "0.74.5",
+    "theme-base": "*",
+    "wordle-app": "*",
+    "wordle-engine": "*",
+    "wordle-ui": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.3.12",
+    "typescript": "^5.4.0"
+  }
+}
