@@ -92,7 +92,7 @@ export const copaTheme: WordleTheme = {
     en: copaStringsEn,
   },
 
-  background: { kind: 'image', opacity: 0.55 },
+  background: { kind: 'image', opacity: 0.8 },
 
   explanations: {
     pt: copaExplanationsPt,
