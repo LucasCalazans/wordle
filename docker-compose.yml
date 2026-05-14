@@ -18,7 +18,9 @@ services:
     environment:
       REACT_NATIVE_PACKAGER_HOSTNAME: "0.0.0.0"
       EXPO_DEVTOOLS_LISTEN_ADDRESS: "0.0.0.0"
-      HOME: /tmp
+      # HOME aponta pra um path do bind mount pra que login de eas-cli, expo,
+      # npm cache, etc. persistam entre runs de `docker compose run --rm`.
+      HOME: /workspace/.dev-home
     stdin_open: true
     tty: true
     command: bash

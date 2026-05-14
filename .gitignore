@@ -59,3 +59,7 @@ packages/*/tmp/
 
 # Claude Code internals
 .claude/worktrees/
+
+# Docker dev container HOME (persists eas-cli login, npm cache, etc.)
+.dev-home/*
+!.dev-home/.keep
