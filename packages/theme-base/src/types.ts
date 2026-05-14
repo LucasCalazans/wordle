@@ -121,11 +121,21 @@ export interface ThemeWordList {
   };
 }
 
-/** Visual padrão renderizado atrás do conteúdo de tela. */
-export type ThemeBackgroundKind = 'plain' | 'pitchStripes';
+/**
+ * Visual padrão renderizado atrás do conteúdo de tela.
+ * - `plain`: nada (default)
+ * - `pitchStripes`: stripes horizontais procedurais (cores do tema)
+ * - `image`: usa `theme.assets.backgroundPattern` como ImageBackground
+ */
+export type ThemeBackgroundKind = 'plain' | 'pitchStripes' | 'image';
 
 export interface ThemeBackground {
   kind: ThemeBackgroundKind;
+  /**
+   * Opacidade aplicada ao background. Útil para "lavar" texturas
+   * que ficam muito chamativas. Default 1 (sem alterar).
+   */
+  opacity?: number;
 }
 
 /**

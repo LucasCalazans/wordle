@@ -70,7 +70,9 @@ export const copaTheme: WordleTheme = {
 
   spacing: { tileGap: 5, rowGap: 5, padding: 12 },
 
-  assets: {},
+  assets: {
+    backgroundPattern: require('../assets/grass-portrait.jpg'),
+  },
 
   wordList: {
     pt: wordsCopaPt,
@@ -90,7 +92,7 @@ export const copaTheme: WordleTheme = {
     en: copaStringsEn,
   },
 
-  background: { kind: 'pitchStripes' },
+  background: { kind: 'image', opacity: 0.55 },
 
   explanations: {
     pt: copaExplanationsPt,

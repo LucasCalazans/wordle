@@ -3,6 +3,7 @@ import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Locale } from 'theme-base';
 import {
+  BackgroundImage,
   Board,
   EndGameModal,
   Header,
@@ -126,13 +127,19 @@ export function GameScreen({ locale, onChangeLocale }: GameScreenProps) {
     );
   }
 
-  const showPitch = theme.background?.kind === 'pitchStripes';
+  const bgKind = theme.background?.kind ?? 'plain';
 
   return (
     <SafeAreaView
       style={[styles.root, { backgroundColor: theme.colors.background }]}
     >
-      {showPitch ? <PitchStripes /> : null}
+      {bgKind === 'pitchStripes' ? <PitchStripes /> : null}
+      {bgKind === 'image' && theme.assets.backgroundPattern ? (
+        <BackgroundImage
+          source={theme.assets.backgroundPattern}
+          opacity={theme.background?.opacity}
+        />
+      ) : null}
       <Header
         title={strings.appTitle}
         locale={locale}

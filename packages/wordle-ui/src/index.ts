@@ -27,3 +27,6 @@ export type { ToastProps } from './components/Toast';
 
 export { PitchStripes } from './components/PitchStripes';
 export type { PitchStripesProps } from './components/PitchStripes';
+
+export { BackgroundImage } from './components/BackgroundImage';
+export type { BackgroundImageProps } from './components/BackgroundImage';
