@@ -25,6 +25,10 @@ web-build/
 *.aab
 *.ipa
 
+# Play Console service account credentials (used by )
+play-service-account.json
+apps/*/play-service-account.json
+
 # Environment
 .env
 .env.*
