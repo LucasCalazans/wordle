@@ -23,7 +23,7 @@ module.exports = {
     ],
   ],
   android: {
-    package: 'com.prism.copaletras',
+    package: 'com.calazans.copaletras',
     versionCode: 1,
     permissions: [],
     adaptiveIcon: {
@@ -32,7 +32,7 @@ module.exports = {
     },
   },
   ios: {
-    bundleIdentifier: 'com.prism.copaletras',
+    bundleIdentifier: 'com.calazans.copaletras',
     buildNumber: '1',
     supportsTablet: true,
   },

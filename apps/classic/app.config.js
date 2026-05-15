@@ -22,7 +22,7 @@ module.exports = {
     ],
   ],
   android: {
-    package: 'com.prism.cincoletras',
+    package: 'com.calazans.cincoletras',
     versionCode: 1,
     permissions: [],
     adaptiveIcon: {
@@ -31,7 +31,7 @@ module.exports = {
     },
   },
   ios: {
-    bundleIdentifier: 'com.prism.cincoletras',
+    bundleIdentifier: 'com.calazans.cincoletras',
     buildNumber: '1',
     supportsTablet: true,
   },
